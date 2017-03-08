@@ -13,7 +13,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Welcome</title>
 </head>
-<body>
-${requestScope.message}
+<body><center>
+${requestScope.message}<br>
+${requestScope.user.userName}<br>
+${sessionScope.user.userName}<br>
+</center>
 </body>
 </html>

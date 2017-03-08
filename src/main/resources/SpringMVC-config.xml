@@ -19,7 +19,15 @@
     <!--注解类型的处理器适配器-->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
     <!--视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/content/</value>
+        </property>
+        <property name="suffix" >
+            <value>.jsp</value>
+        </property>
+    </bean>
+
 
     <!--基于配置-->
     <!--配置Handle，映射"/hello"请求-->
