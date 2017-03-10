@@ -12,7 +12,7 @@
 </head>
 <body>
 <center>
-    <form action="logIn2">
+    <form action="logIn1">
         <input type="text" id="logInName" name="logInName">
         <input type="submit" id="submit">
     </form>

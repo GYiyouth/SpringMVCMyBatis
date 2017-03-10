@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>GeYao</groupId>
-  <artifactId>SpringMVC+MyBatis</artifactId>
+  <artifactId>SpringMVCMyBatis</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>SpringMVC+MyBatis Maven Webapp</name>
+  <name>SpringMVCMyBatis Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
     <properties>
@@ -202,6 +202,15 @@
           <!--<version>1.10</version>-->
       <!--</dependency>-->
 
+      <!-- 文件上传 -->
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.3.2</version>
+      </dependency>
+
+
+
 
 
 
@@ -211,6 +220,25 @@
 
 
   <build>
-    <finalName>SpringMVC+MyBatis</finalName>
+    <finalName>SpringMVCMyBatis</finalName>
+      <plugins>
+          <plugin>
+
+              <groupId>org.apache.tomcat.maven</groupId>
+              <artifactId>tomcat7-maven-plugin</artifactId>
+              <version>2.2</version>
+              <configuration>
+
+                  <url>http://128.199.132.67:8080/manager/text</url>
+                  <!--<server>tomcat7</server>-->
+                  <username>root</username>
+                  <password>123456</password>
+                  <update>true</update>
+                  <path>/SpringMVC</path>
+
+              </configuration>
+
+          </plugin>
+      </plugins>
   </build>
 </project>
