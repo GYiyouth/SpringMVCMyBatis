@@ -27,6 +27,22 @@
             <value>.jsp</value>
         </property>
     </bean>
+    
+    <mvc:interceptors>
+        <bean class="interceptor.InterceptorOne"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/SpringMVC/*"/>
+            <bean class="interceptor.InterceptorOne"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/SpringMVC/FormHandler0.download"/>
+            <bean class="interceptor.InterceptorOne"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/SpringMVC/download.do"/>
+            <bean class="interceptor.InterceptorOne"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <!--基于配置-->

@@ -22,53 +22,58 @@ import java.util.Iterator;
  * Created by geyao on 2017/3/8.
  */
 @Controller
+@RequestMapping(value = {"/SpringMVC", "/springmvc", "/SPRINGMVC", "/Springmvc"})
 public class FormHandler0 {
 
+    private static final String urlAddress = "/SpringMVC";
+
     @ModelAttribute("fileList")
-    public ArrayList<File> getFiles(){
+    public ArrayList<File> getFiles(Model model){
+        System.out.println("fileList");
         String diPath = System.getenv("HOME") + "/files/";
         File dir = new File(diPath);
         File[] files = dir.listFiles();
         ArrayList<File> fileList = new ArrayList<>();
-        for (File file : files){
-            if(file.isDirectory())
-                ;
-            else {
-                if (file.getName().toLowerCase().endsWith(".ds_store")
-                        || file.getName().startsWith("."))
-                    continue;
-                fileList.add(file);
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory())
+                    ;
+                else {
+                    if (file.getName().toLowerCase().endsWith(".ds_store")
+                            || file.getName().startsWith("."))
+                        continue;
+                    fileList.add(file);
+                }
             }
         }
+        System.out.println("fileList里面的Model是 = " + model);
         return fileList;
     }
 
+
+
     @ModelAttribute("fileNameList")
     public ArrayList<String> getFilesName(Model model) throws Exception{
+        System.out.println("fileNameList");
         ArrayList<File> fileList = (ArrayList<File>) model.asMap().get("fileList");
         ArrayList<String> fileNameList = new ArrayList<>();
         for (File tempFile : fileList){
             String longPath = tempFile.getName();
             String parentName = tempFile.getParent();
             String Canonicalpath = tempFile.getCanonicalPath();
-            System.out.println(longPath);
-            System.out.println(parentName);
-            System.out.println(Canonicalpath);
-            System.out.println();
-            System.out.println();
             fileNameList.add(longPath);
         }
-//        if (model.asMap().containsKey("fileNameList")){
-//            model.asMap().remove("fileNameList");
-//        }
-//        model.addAttribute("fileNameList", fileNameList);
+        System.out.println("fileNameList里面的Model是 = " + model);
         return fileNameList;
     }
 
+
+
     //分发
     @RequestMapping(value = "/{formName}")
-    public String logInForm(@PathVariable String formName) throws Exception{
-
+    public String logInForm(@PathVariable String formName, HttpServletRequest request) throws Exception{
+        String url = request.getLocalAddr();
+        System.out.println(url);
         return formName;
     }
 
@@ -87,22 +92,15 @@ public class FormHandler0 {
             //上传文件路径
             String path = System.getenv("HOME") + "/files/";
             String contextPath = request.getServletContext().getContextPath();
-            System.out.println("contextPath = " + contextPath);
-            System.out.println("String path = " + path);
-
             String fileName = file.getOriginalFilename();
-            System.out.println("String fileName = " + fileName);
             File filePath = new File(path, fileName);
-            System.out.println("File filePath = " + filePath);
-            System.out.println("File filePath.getParentFile() = " + filePath.getParentFile());
             if (!filePath.getParentFile().exists()){
                 filePath.getParentFile().mkdirs();
             }
             File targetFile = new File(path + File.separator + fileName);
-            System.out.println("File targetFile = " +targetFile);
             file.transferTo(targetFile);
         }
-        return "redirect:/logInForm3";
+        return "redirect:" + urlAddress + "/logInForm3";
     }
 
     @RequestMapping(value = "/download")
@@ -113,10 +111,11 @@ public class FormHandler0 {
             HttpServletResponse response
     ) throws Exception{
         ArrayList<String> fileNameList = (ArrayList<String>) model.asMap().get("fileNameList");
+        System.out.println();
         HttpHeaders headers= new HttpHeaders();
 
         if (!fileNameList.contains(fileName)){
-            request.getRequestDispatcher("/logInForm3").forward(request, response);
+            request.getRequestDispatcher(urlAddress + "/logInForm3").forward(request, response);
         }
 
         request.setCharacterEncoding("UTF-8");
